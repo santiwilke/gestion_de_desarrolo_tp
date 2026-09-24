@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #e4eefb;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #0f2338;
+}
+
+.tarjeta {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  width: 90%;
+  max-width: 520px;
+  box-shadow: 0 10px 30px rgba(15, 35, 56, 0.12);
+  text-align: center;
+}
+
+.etiqueta { color: #2496ed; font-weight: bold; font-size: 14px; margin: 0; }
+h1 { font-size: 34px; margin: 12px 0; }
+.detalle { color: #44586f; }
+
+button {
+  background: #2496ed;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+h2 { font-size: 18px; margin-top: 28px; }
+ul { list-style: none; padding: 0; text-align: left; }
+li { background: #f1f7fe; border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; }

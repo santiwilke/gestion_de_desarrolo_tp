@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda</title>
-    <style>
-        body { font-family: system-ui, sans-serif; background:#0f1420; color:#eee; text-align:center; padding:30px; }
-        h1 { margin-bottom:6px; }
-        button { background:#1d63ed; color:#fff; border:none; padding:10px 18px; border-radius:8px; font-size:1rem; cursor:pointer; }
-        #lista { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:24px; }
-        .card { background:#1b2233; border-radius:12px; padding:20px; width:200px; }
-        .precio { color:#4ade80; font-size:1.4rem; font-weight:bold; margin:8px 0 4px; }
-        .stock { color:#9aa6bf; font-size:.9rem; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP Docker</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <h1>Nuestra Tienda</h1>
-    <p>Datos servidos por FastAPI + MySQL en contenedores</p>
-    <button onclick="cargarProductos()">Recargar</button>
-    <div id="lista"></div>
-    <script src="app.js"></script>
+  <main class="tarjeta">
+    <p class="etiqueta">TP Docker · Frontend con Nginx</p>
+    <h1 id="saludo">Cargando...</h1>
+    <p class="detalle">El nombre sale de la tabla <b>usuarios</b> de MySQL y llega a través de FastAPI.</p>
+    <button onclick="recargar()">Recargar</button>
+    <h2>Usuarios en la base</h2>
+    <ul id="lista"></ul>
+  </main>
+  <script src="app.js"></script>
 </body>
 </html>

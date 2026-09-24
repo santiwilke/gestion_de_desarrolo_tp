@@ -1,53 +1,67 @@
+# ============================================================
+# docker-compose.yml - TP Docker
+# Levanta los 3 contenedores (base, backend y frontend)
+# conectados por una red bridge propia.
+# Uso: docker compose up --build
+# Las variables ${...} se leen del archivo .env
+# ============================================================
+
 services:
+
+  # ---------- Base de datos: MySQL ----------
   db:
-    image: mysql:8.0
+    image: mysql:8.0                  # imagen oficial de MySQL
     container_name: tienda-db
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: tienda
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: apppass
+    environment:                      # las 4 variables que pide la consigna
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - db-data:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - red-tienda
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpass"]
+      - db-data:/var/lib/mysql                              # datos persistentes
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  # crea la tabla la primera vez
+    healthcheck:                      # pregunta si MySQL ya acepta conexiones
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
-
-  backend:
-    build: ./backend
-    container_name: tienda-backend
-    environment:
-      DB_HOST: db
-      DB_USER: appuser
-      DB_PASSWORD: apppass
-      DB_NAME: tienda
-    ports:
-      - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
     networks:
       - red-tienda
 
+  # ---------- Backend: FastAPI ----------
+  backend:
+    build: ./backend                  # se construye con backend/Dockerfile
+    container_name: tienda-backend
+    environment:                      # datos para conectarse a la base
+      DB_HOST: db                     # el nombre del servicio, no una IP
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+    ports:
+      - "8000:8000"                   # API en http://localhost:8000
+    depends_on:
+      db:
+        condition: service_healthy    # espera a que la base pase el healthcheck
+    networks:
+      - red-tienda
+
+  # ---------- Frontend: Nginx ----------
   frontend:
-    build: ./frontend
+    build: ./frontend                 # se construye con frontend/Dockerfile
     container_name: tienda-frontend
     ports:
-      - "8080:80"
+      - "8080:80"                     # web en http://localhost:8080
     depends_on:
       - backend
     networks:
       - red-tienda
 
+# Volumen con nombre: guarda los datos de MySQL fuera del contenedor
 volumes:
   db-data:
 
+# Red bridge personalizada: los contenedores se encuentran por su nombre
 networks:
   red-tienda:
     driver: bridge

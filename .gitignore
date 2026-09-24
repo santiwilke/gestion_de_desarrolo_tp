@@ -1,0 +1,6 @@
+# Claves reales: nunca se suben al repo (se comparte .env.example)
+.env
+
+# Archivos que genera Python
+__pycache__/
+*.pyc

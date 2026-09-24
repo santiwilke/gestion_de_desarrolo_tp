@@ -1,14 +1,13 @@
+-- Se ejecuta solo la primera vez que arranca la base (con el volumen vacío)
 USE tienda;
 
-CREATE TABLE IF NOT EXISTS productos (
+CREATE TABLE IF NOT EXISTS usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL,
-  precio INT NOT NULL,
-  stock INT NOT NULL
+  email VARCHAR(120) NOT NULL
 );
 
-INSERT INTO productos (nombre, precio, stock) VALUES
-  ('Remera negra', 15999, 20),
-  ('Buzo oversize', 34999, 12),
-  ('Gorra', 9999, 30),
-  ('Pantalon cargo', 42999, 8);
+INSERT INTO usuarios (nombre, email) VALUES
+  ('Santiago', 'santiago@ejemplo.com'),
+  ('Julian', 'julian@ejemplo.com'),
+  ('Anahi', 'anahi@ejemplo.com');
