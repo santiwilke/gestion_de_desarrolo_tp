@@ -1,4 +1,4 @@
-# TP Docker - Equipo #X
+# TP Docker - ACTIVIDAD 2 
 
 Aplicación web full-stack con 3 contenedores Docker:
 MySQL (base de datos), FastAPI (backend) y Nginx (frontend),
