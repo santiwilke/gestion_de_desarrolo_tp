@@ -56,3 +56,34 @@ docker compose up --build
 
 - `docker compose down` apaga y conserva los datos
 - `docker compose down -v` apaga y borra los datos
+
+## Demo: consultar y modificar la base
+
+1. Entrar a la consola de MySQL (la clave está en el `.env`):
+
+```
+docker exec -it tienda-db mysql -u root -p
+```
+
+2. Consultar la tabla:
+
+```sql
+USE tienda;
+SHOW TABLES;
+SELECT * FROM usuarios;
+```
+
+3. Modificar un registro:
+
+```sql
+UPDATE usuarios SET nombre = 'Profe' WHERE id = 1;
+```
+
+4. Recargar http://localhost:8080: la web dice "¡Bienvenido/a, Profe!".
+
+5. Para volver a los datos iniciales:
+
+```
+docker compose down -v
+docker compose up --build
+```
